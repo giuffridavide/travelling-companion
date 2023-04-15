@@ -8,7 +8,8 @@ urlpatterns = [
 
     # Dennis
     path('dennis/', views.get_routes, name='routes'),
-    path('trips/', views.get_trips, name='trips'),
-    path('trips/<str:pk>/', views.get_trip, name='trip'),
+    path('api/trips/', views.get_trips, name='trips'),
+    # <str if used to cast the pk to string
+    path('api/trips/<str:pk>/', views.get_trip, name='trip'),
     # path('', include('backend.urls')),
 ]
