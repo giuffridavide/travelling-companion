@@ -8,6 +8,7 @@ urlpatterns = [
 
     # Dennis
     path('dennis/', views.get_routes, name='routes'),
+    path('api/users/', views.get_users, name='users'),
     path('api/trips/', views.get_trips, name='trips'),
     # <str if used to cast the pk to string
     path('api/trips/<str:pk>/', views.get_trip, name='trip'),
