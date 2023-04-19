@@ -1,26 +1,32 @@
-import React, {useState, useEffect} from 'react'
-import ListItem from '../components/ListItem'
+import React, {useState, useEffect, useContext} from 'react'
+import DisplayTrip from '../components/DisplayTrip'
+import { getAllTrips } from '../api/api'
+import AuthContext from '../context/AuthContext'
+import './style/trip.css';
 
 const TripsListPage = () => {
 
     let [trips, setTrip] = useState([])
 
-    useEffect(()=> {
+    let {authTokens, user} = useContext(AuthContext)
+
+    let getTrips = () => {
+        getAllTrips(authTokens).then(trip => {
+            setTrip(trip)
+        })
+    }
+
+    useEffect(() => {
         getTrips()
     }, [])
 
-    // await means let's wait until you don't have the response
-    let getTrips = async () =>{
-        let response = await fetch('/api/trips/')
-        let data = await response.json()
-        setTrip(data)
-    }
+    console.log('>>>' + trips)
 
     return (
         <div>
             <div className='trips-list'>
                 {trips.map((trip, index) => (
-                    <ListItem key={index} trip={trip} />
+                    <DisplayTrip key={index} trip={trip} />
                 ))}
             </div>
         </div>

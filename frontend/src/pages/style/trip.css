@@ -1,0 +1,33 @@
+.trips-list {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin: 10px;
+  width: 300px;
+}
+
+.trips-list img {
+  width: 100%;
+}
+
+.trips-list h3 {
+  font-size: 1.2rem;
+  margin: 10px;
+}
+
+.trips-list p {
+  font-size: 0.9rem;
+  margin: 10px;
+}
+
+.trips-list a {
+  background-color: #007bff;
+  border: none;
+  color: #fff;
+  display: block;
+  font-size: 1rem;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+}
