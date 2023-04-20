@@ -20,11 +20,11 @@ const TripsListPage = () => {
         getTrips()
     }, [])
 
-    console.log('>>>' + trips)
+    // console.log('>>>' + trips)
 
     return (
         <div>
-            <div className='trips-list'>
+            <div className='trips-container'>
                 {trips.map((trip, index) => (
                     <DisplayTrip key={index} trip={trip} />
                 ))}

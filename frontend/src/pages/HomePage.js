@@ -14,23 +14,31 @@ const HomePage = () => {
           <p>Find the perfect destination for your next trip.</p>
         </div>
       </section>
-      <section className="features">
-        <div className="feature">
-          <img src="https://source.unsplash.com/1m1FPmYxcWw/400x300" alt="Explore"/>
-          <h3>Explore</h3>
-          <p>Discover new destinations and plan your trip with our travel guides.</p>
+
+      <section className="cards-container">
+        <div className="card left">
+          <img src="images/trips/London.jpg"/>
+          <div className="card-content">
+            <a className='card-content'>Explore</a>
+            <p>Discover new destinations and plan your trip with our travel guides.</p>
+          </div>
         </div>
-        <div className="feature">
-          <img src="https://source.unsplash.com/oznE58nWgRY/400x300" alt="Book"/>
-          <h3>Book</h3>
-          <p>Book flights, hotels, and activities with ease.</p>
+        <div className="card center">
+          <img src="images/homepage/book.jpg"/>
+          <div className="card-content">
+            <a className='card-content'>Book</a>
+            <p>Book flights, hotels, and activities with ease.</p>
+          </div>
         </div>
-        <div className="feature">
-          <img src="https://source.unsplash.com/f4vKZJ6eZf0/400x300" alt="Save"/>
-          <h3>Save</h3>
-          <p>Save money by finding the best deals on flights and hotels.</p>
+        <div className="card right">
+          <img src="deals.jpg"/>
+          <div className="card-content">
+            <a className='card-content'>Deals</a>
+            <p>Save money by finding the best deals on flights and hotels.</p>
+          </div>
         </div>
       </section>
+
       <section className="popular-destinations">
         <h2>Popular Destinations</h2>
         <div className="destination">
@@ -59,6 +67,7 @@ const HomePage = () => {
           <h4>John Smith</h4>
         </div>
       </section>
+
     </div>
   )
 }
