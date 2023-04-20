@@ -11,9 +11,6 @@ const HomePage = () => {
   console.log(href_book);
 
   return (
-    // <div>
-    //     <p>You are logged to the home page</p>
-    // </div>
     <div>
       <section className="hero-image">
         <div className="hero-text">

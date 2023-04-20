@@ -1,35 +1,42 @@
 import React, {useContext} from 'react'
 import { Link } from 'react-router-dom'
 import AuthContext from '../context/AuthContext'
+import './style/header.css';
 
 const Header = () => {
   let {user, logoutUser} = useContext(AuthContext)
   return (
-    <div>
-		<Link to="/">Home</Link>
-		<span> | </span>
+    <div className="navbar">
+      <ul className="navbar-nav">
+        <li className="nav-item">
+		      <Link to="/" className="nav-link">Home</Link>
+        </li>
 
-    {user ? (
-              <p onClick={logoutUser}>Logout</p>
-            ): (
-              <Link to="/login">Login</Link>
-            )
-    }
+        <li className="nav-item">
+        {user ? (
+                  <a onClick={logoutUser} className='nav-link'>Logout</a>
+                ):
+                (
+                  <Link to="/login" className='nav-link'>Login</Link>
+                )
+        }
+        </li>
 
-    <span> | </span>
+        <li className="nav-item">
+        {user ? (
+                  <Link to="/booking" className='nav-link'>Booking</Link>
+                ):
+                (
+                  <Link to="/login" className='nav-link'>Booking</Link>
+                )
+        }
+        </li>
 
-    {user? (
-		  <Link to="/booking">Booking</Link>
-      ): (
-		    <Link to="/login">Booking</Link>
-      )
-    }
+        {user && <Link to="/dashboard" className='nav-link'>Dashboard</Link>}
+
+    </ul>
     
-
-
-
-
-    {user && <p>Hello {user.username}</p>}
+    {user && <p className="greeting">Hello {user.username}</p>}
 
     </div>
   )

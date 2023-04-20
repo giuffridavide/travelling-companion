@@ -8,8 +8,6 @@ import { useNavigate } from 'react-router-dom'
 
 
 function BookingPage() {
-
-  // let {loginUser} = useContext(AuthContext)
   let {user, logoutUser} = useContext(AuthContext)
   const navigate = useNavigate()
 
