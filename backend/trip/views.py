@@ -3,8 +3,7 @@ from django.http import JsonResponse, HttpResponse
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
-
-from .serializers import TripSerializer, UserSerializer
+from .serializers import TripSerializer, UserDestinationTripSerializer, UserSerializer
 from .models import Trip, User
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
@@ -69,11 +68,23 @@ def get_routes(request):
 
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def get_trips(request):
-    user = request.user
-    trips = Trip.objects.filter(user__id=user.id)
-    serializer = TripSerializer(trips, many=True)
+    user_id = request.user.id
+    user_id = 0
+    trips = Trip.objects.select_related('destination').filter(user_id=user_id).distinct('destination')
+
+    # trips = Trip.objects.raw(f"SELECT max(tt.id) AS trip_id, max(td.id) AS destination_id, name,\
+    #                                     td.punchline, td.description, start_date, end_date\
+    #                             FROM trip_trip tt\
+    #                             JOIN trip_destination td\
+    #                             	ON tt.destination_id=td.id\
+    #                             WHERE tt.user_id={user.id}\
+    #                             GROUP BY name, td.punchline, td.description, start_date, end_date")
+    serializer = UserDestinationTripSerializer(trips, many=True)
+
+    print(serializer.data)
+
     return Response(serializer.data)
 
 
