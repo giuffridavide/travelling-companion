@@ -1,9 +1,7 @@
 import './App.css';
-import PrivateRoute from './utils/PrivateRoute'
 import Header from './components/Header';
 import {AuthProvider} from './context/AuthContext'
 import TripsListPage from './pages/TripsListPage';
-import UsersListPage from './pages/UsersListPage';
 import BookingPage from './pages/BookingPage';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
@@ -23,10 +21,6 @@ function App() {
 					</Routes>
 				</AuthProvider>
 			</Router>
-
-			{/* <Header/>
-			<TripsListPage/>
-			<UsersListPage/> */}
 		</div>
 	);
 }

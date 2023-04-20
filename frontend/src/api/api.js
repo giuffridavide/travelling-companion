@@ -1,4 +1,3 @@
-
 export async function getAllTrips(authTokens) {
 
     try {
@@ -15,6 +14,24 @@ export async function getAllTrips(authTokens) {
         return []
     }
 }
+
+
+export async function createTrip(data) {
+    try {
+            await fetch(`/api/newTrip/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            body: JSON.stringify(data)
+        })
+        return true
+    } catch (error) {
+        console.log('>>>createTrip<<<' + error)
+        return false
+    }
+}
+
 
 export async function getAllDestinations(authTokens) {
 

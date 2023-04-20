@@ -1,13 +1,19 @@
-import React, {useState, useEffect } from 'react'
+import React, {useState, useEffect, useContext } from 'react'
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './style/booking.css';
-import { getAllDestinations } from '../api/api'
+import { getAllDestinations, createTrip } from '../api/api'
+import AuthContext from '../context/AuthContext'
+import { useNavigate } from 'react-router-dom'
 
 
 function BookingPage() {
 
-    const [destinations, setDestination] = useState([])
+  // let {loginUser} = useContext(AuthContext)
+  let {user, logoutUser} = useContext(AuthContext)
+  const navigate = useNavigate()
+
+  const [destinations, setDestination] = useState([])
 
     let getTrips = () => {
         getAllDestinations().then(trip => {
@@ -27,20 +33,6 @@ function BookingPage() {
   const [endDate, setEndDate] = useState(null);
   const [showSuggestions, setShowSuggestions] = useState(false);
 
-  const handleCityChange = (event) => {
-    const { value } = event.target;
-    setCity(value);
-    setShowSuggestions(value !== '');
-  };
-
-  const handleStartDateChange = (date) => {
-    setStartDate(date);
-  };
-
-  const handleEndDateChange = (date) => {
-    setEndDate(date);
-  };
-
   const handleCitySelect = (selectedCity) => {
     setCity(selectedCity);
     setShowSuggestions(false);
@@ -50,17 +42,32 @@ function BookingPage() {
     d.name.toLowerCase().includes(city.toLowerCase())
   );
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    let data = {
+      'destination': event.target.elements.city.value,
+      'start_date': event.target.elements.startDate.value,
+      'end_date': event.target.elements.endDate.value,
+      'user_id': user.user_id
+    }
+    let success = createTrip(data);
+    if (success) {
+      navigate('/dashboard');
+    }
+  };
+
   return (
     <div className="form-container">
-      <form>
-        <h1>Choose your destination!</h1>
+      <form onSubmit={handleSubmit}>
+        <h1>Plan your trip</h1>
         <div className="form-group">
           <label htmlFor="city">City</label>
           <input
             type="text"
             id="city"
             value={city}
-            onChange={handleCityChange}
+            required
+            onChange={(e) => setCity(e.target.value)}
           />
           {showSuggestions && (
             <ul className="suggestions">
@@ -73,24 +80,28 @@ function BookingPage() {
           )}
         </div>
         <div className="form-group">
-          <label htmlFor="start-date">Start Date</label>
+          <label htmlFor="startDate">Start Date</label>
           <DatePicker
-            id="start-date"
+            id="startDate"
+            value={startDate}
             selected={startDate}
-            onChange={handleStartDateChange}
-            dateFormat="dd/MM/yyyy"
+            dateFormat="yyyy-MM-dd"
+            required
+            onChange={(e) => setStartDate(e)}
           />
         </div>
         <div className="form-group">
-          <label htmlFor="end-date">End Date</label>
+          <label htmlFor="endDate">End Date</label>
           <DatePicker
-            id="end-date"
+            id="endDate"
+            value={endDate}
             selected={endDate}
-            onChange={handleEndDateChange}
-            dateFormat="dd/MM/yyyy"
+            dateFormat="yyyy-MM-dd"
+            required
+            onChange={(e) => setEndDate(e)}
           />
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit">Book now</button>
       </form>
     </div>
   );
