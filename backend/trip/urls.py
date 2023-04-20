@@ -17,6 +17,8 @@ urlpatterns = [
 
     path('api/users/', views.get_users, name='users'),
     path('api/trips/', views.get_trips, name='trips'),
+    path('api/destinations/', views.get_destinations, name='destinations'),
+    path('api/newTrip/', views.new_trip, name='newTrip'),
     # <str if used to cast the pk to string
     path('api/trips/<str:pk>/', views.get_trip, name='trip'),
     path('login/', views.login_page, name='login'),

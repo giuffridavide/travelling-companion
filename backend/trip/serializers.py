@@ -1,16 +1,5 @@
-from rest_framework.serializers import ModelSerializer, Serializer
-from rest_framework import serializers
+from rest_framework.serializers import ModelSerializer
 from .models import Destination, Trip, User
-
-# class SpecificUserTripSerializer(Serializer):
-#     trip_id = serializers.IntegerField()
-#     destination_id = serializers.IntegerField()
-#     name = serializers.CharField()
-#     punchline = serializers.CharField()
-#     description = serializers.CharField()
-#     start_date = serializers.DateField()
-#     end_date = serializers.DateField()
-
 
 class TripSerializer(ModelSerializer):
     class Meta:
@@ -34,4 +23,3 @@ class UserDestinationTripSerializer(ModelSerializer):
     class Meta:
         model = Trip
         fields = ['start_date', 'end_date', 'user', 'destination']
-        # fields = '__all__'

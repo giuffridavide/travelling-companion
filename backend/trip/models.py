@@ -36,6 +36,9 @@ class Destination(Model):
         default=''
     )
 
+    def __str__(self):
+        return f"{self.name}"
+    
 class City(Model):
     name = CharField(
         _('Trip main destination'),

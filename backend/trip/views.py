@@ -3,8 +3,8 @@ from django.http import JsonResponse, HttpResponse
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
-from .serializers import TripSerializer, UserDestinationTripSerializer, UserSerializer
-from .models import Trip, User
+from .serializers import DestinationSerializer, TripSerializer, UserDestinationTripSerializer, UserSerializer
+from .models import Trip, User, Destination, City
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 
@@ -67,11 +67,31 @@ def get_routes(request):
     return Response(routes)
 
 
-@api_view(['GET'])
+
+@api_view(['POST'])
 # @permission_classes([IsAuthenticated])
+def new_trip(request):
+    data = request.data
+
+    user = User.objects.get(id=data['user_id'])
+    # These should be done with id. So need to remap them
+    destination = Destination.objects.get(name=data['destination'])
+    city = City.objects.get(name=data['destination'])
+
+    trip = Trip(start_date = data['start_date'], end_date=data['end_date'],
+            user=user, destination=destination, city=city, cost=0)
+    trip.save()
+
+
+    serializer = TripSerializer(trip, many=False)
+    return Response(serializer.data)
+    
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def get_trips(request):
     user_id = request.user.id
-    user_id = 0
     trips = Trip.objects.select_related('destination').filter(user_id=user_id).distinct('destination')
 
     # trips = Trip.objects.raw(f"SELECT max(tt.id) AS trip_id, max(td.id) AS destination_id, name,\
@@ -82,9 +102,6 @@ def get_trips(request):
     #                             WHERE tt.user_id={user.id}\
     #                             GROUP BY name, td.punchline, td.description, start_date, end_date")
     serializer = UserDestinationTripSerializer(trips, many=True)
-
-    print(serializer.data)
-
     return Response(serializer.data)
 
 
@@ -102,6 +119,20 @@ def get_trip(request, pk):
     return Response(serializer.data)
 
 
+@api_view(['GET'])
+def get_user(request, pk):
+    user = User.objects.get(id=pk)
+    serializer = UserSerializer(user, many=False)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def get_destinations(request):
+    destinations = Destination.objects.all()
+    serializer = DestinationSerializer(destinations, many=True)
+    return Response(serializer.data)
+
+
 def logout_request(request):
     logout(request)
     messages.info(request, "Logged out successfully!")
@@ -110,4 +141,3 @@ def logout_request(request):
 def login_page(request):
     context = {}
     return render(request, 'accounts/login.html', context)
-    return redirect("main:homepage")
