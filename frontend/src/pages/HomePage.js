@@ -1,8 +1,15 @@
-import React from 'react'
 import './style/homepage.css';
-
+import React, {useState, useContext} from 'react'
+import AuthContext from '../context/AuthContext'
+import { Link } from 'react-router-dom'
 
 const HomePage = () => {
+
+  let {user, logoutUser} = useContext(AuthContext)
+
+  const href_book = user? `/booking` : `/login`;
+  console.log(href_book);
+
   return (
     // <div>
     //     <p>You are logged to the home page</p>
@@ -16,24 +23,26 @@ const HomePage = () => {
       </section>
 
       <section className="cards-container">
+        {/* <Link to={href_book}> */}
         <div className="card left">
           <img src="images/trips/London.jpg"/>
           <div className="card-content">
-            <a className='card-content'>Explore</a>
+            <a className='card-content' href='#'>Explore</a>
             <p>Discover new destinations and plan your trip with our travel guides.</p>
           </div>
         </div>
+        {/* </Link> */}
         <div className="card center">
           <img src="images/homepage/book.jpg"/>
           <div className="card-content">
-            <a className='card-content'>Book</a>
+            <a className='card-content' href={href_book}>Book</a>
             <p>Book flights, hotels, and activities with ease.</p>
           </div>
         </div>
         <div className="card right">
           <img src="deals.jpg"/>
           <div className="card-content">
-            <a className='card-content'>Deals</a>
+            <a className='card-content' href='#'>Deals</a>
             <p>Save money by finding the best deals on flights and hotels.</p>
           </div>
         </div>

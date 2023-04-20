@@ -17,8 +17,6 @@ function compareDates(d1, d2){
     res = false;
   }
 
-  console.log(trip_date, today, res);
-
   return res;
 }
 

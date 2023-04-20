@@ -10,11 +10,23 @@ const Header = () => {
 		<span> | </span>
 
     {user ? (
-      <p onClick={logoutUser}>Logout</p>
-    ): (
-      <Link to="/login">Login</Link>
-    )
+              <p onClick={logoutUser}>Logout</p>
+            ): (
+              <Link to="/login">Login</Link>
+            )
     }
+
+    <span> | </span>
+
+    {user? (
+		  <Link to="/booking">Booking</Link>
+      ): (
+		    <Link to="/login">Booking</Link>
+      )
+    }
+    
+
+
 
 
     {user && <p>Hello {user.username}</p>}

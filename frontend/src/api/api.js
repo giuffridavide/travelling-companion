@@ -14,7 +14,19 @@ export async function getAllTrips(authTokens) {
         console.log('>>>TRIPS<<<' + error)
         return []
     }
-  }
+}
+
+export async function getAllDestinations(authTokens) {
+
+    try {
+        let response = await fetch('/api/destinations/')
+        return await response.json()
+        
+    } catch (error) {
+        console.log('>>>DESTINATIONS<<<' + error)
+        return []
+    }
+}
 
 
 export async function getAllUsers() {
