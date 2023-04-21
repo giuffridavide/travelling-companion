@@ -62,7 +62,7 @@ cursor: pointer;
 }
 
 .hero-image {
-background-image: url("https://www.rd.com/wp-content/uploads/2020/01/GettyImages-1131335393-e1650030686687.jpg");
+background-image: url("../../../public/images/homepage/plane.jpg");
 height: 400px;
 background-size: cover;
 display: flex;
@@ -154,6 +154,19 @@ font-size: 16px;
 margin-bottom: 10px;
 color: #999;
 padding: 10px;
+}
+
+
+.destination-card p {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #000;
+  text-align: center;
+  padding-bottom: 50px;
+}
+
+.destination-card h2 {
+  margin-bottom: 0px;
 }
 
 .testimonials {

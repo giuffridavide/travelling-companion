@@ -35,6 +35,12 @@ class Destination(Model):
         null=False,
         default=''
     )
+    img_name = CharField(
+        _('The name of the image to display'),
+        max_length=20,
+        null=False,
+        default=''
+    )
 
     def __str__(self):
         return f"{self.name}"

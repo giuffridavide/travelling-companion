@@ -1,7 +1,8 @@
 import './style/homepage.css';
-import React, {useState, useContext} from 'react'
+import React, {useState, useContext, useEffect} from 'react'
 import AuthContext from '../context/AuthContext'
-import { Link } from 'react-router-dom'
+import { getAllDestinations } from '../api/api.js'
+import DisplayDestination from '../components/DisplayDestination'
 
 const HomePage = () => {
 
@@ -9,6 +10,18 @@ const HomePage = () => {
 
   const href_book = user? `/booking` : `/login`;
   console.log(href_book);
+
+  let [destinations, setDestination] = useState([])
+  let getDestinations = () => {
+    getAllDestinations().then(trip => {
+        setDestination(trip)
+    })
+  }
+  useEffect(() => {
+      getDestinations()
+  }, [])
+
+
 
   return (
     <div>
@@ -22,7 +35,7 @@ const HomePage = () => {
       <section className="cards-container">
         {/* <Link to={href_book}> */}
         <div className="card left">
-          <img src="images/trips/London.jpg"/>
+          <img src="images/trips/london.jpg"/>
           <div className="card-content">
             <a className='card-content' href='#'>Explore</a>
             <p>Discover new destinations and plan your trip with our travel guides.</p>
@@ -37,7 +50,7 @@ const HomePage = () => {
           </div>
         </div>
         <div className="card right">
-          <img src="deals.jpg"/>
+          <img src="images/homepage/spa.jpg"/>
           <div className="card-content">
             <a className='card-content' href='#'>Deals</a>
             <p>Save money by finding the best deals on flights and hotels.</p>
@@ -46,20 +59,13 @@ const HomePage = () => {
       </section>
 
       <section className="popular-destinations">
-        <h2>Popular Destinations</h2>
-        <div className="destination">
-          <img src="https://source.unsplash.com/MV7k-1cPCr8/400x300" alt="London"/>
-          <h3>London</h3>
-        </div>
-        <div className="destination">
-          <img src="https://source.unsplash.com/ekcu3qV7da8/400x300" alt="Paris"/>
-          <h3>Paris</h3>
-        </div>
-        <div className="destination">
-          <img src="https://source.unsplash.com/2YkFY1c1x-A/400x300" alt="New York"/>
-          <h3>New York</h3>
+      <div className='destinations-container'>
+          {destinations.map((destination, index) => (
+              <DisplayDestination key={index} destination={destination} />
+              ))}
         </div>
       </section>
+
       <section className="testimonials">
         <h2>What Our Customers Say</h2>
         <div className="testimonial">
