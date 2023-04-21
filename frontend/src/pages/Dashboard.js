@@ -55,9 +55,6 @@ const Dashboard = () => {
         }
     });
 
-    console.log('Past:', pastTrips);
-    console.log('Upcoming:', upcomingTrips);
-
     return (
         <div>
             {upcomingTrips.length>0? 
