@@ -1,7 +1,7 @@
 import './App.css';
 import Header from './components/Header';
 import {AuthProvider} from './context/AuthContext'
-import TripsListPage from './pages/TripsListPage';
+import Dashboard from './pages/Dashboard';
 import BookingPage from './pages/BookingPage';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
@@ -16,7 +16,7 @@ function App() {
 					<Routes>
 						<Route element={<HomePage/>} path='/' exact/>
 						<Route element={<LoginPage/>} path='/login/'/>
-						<Route element={<TripsListPage/>} path='/dashboard/'/>
+						<Route element={<Dashboard/>} path='/dashboard/'/>
 						<Route element={<BookingPage/>} path='/booking/'/>
 					</Routes>
 				</AuthProvider>
