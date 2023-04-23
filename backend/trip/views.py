@@ -7,9 +7,9 @@ from .serializers import DestinationSerializer, TripSerializer, UserDestinationT
 from .models import Trip, User, Destination, City
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
-
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
+from utils.manage_trips import getNearby
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -85,6 +85,33 @@ def new_trip(request):
 
     serializer = TripSerializer(trip, many=False)
     return Response(serializer.data)
+
+
+
+@api_view(['POST'])
+# @permission_classes([IsAuthenticated])
+def update_trip(request):
+    data = request.data
+    trip = data['trip']
+    adventurer = User.objects.get(id=data['user']['user_id'])
+    destination = Destination.objects.get(id=trip['destination']['id'])
+
+    for stop_id in [c for c in data['stops'] if len(c)>0]:
+        city = City.objects.get(id=int(stop_id))
+        to_update = Trip(start_date = trip['start_date'], end_date=trip['end_date'],
+            user=adventurer, destination=destination, city=city, cost=data['cost'])
+        to_update.save()
+
+
+    '''
+        For the other users we should send an email asking
+        the permission to update their trip
+    '''
+    for adventurer in data['selectedPassengers']:
+        pass
+
+
+    return Response()
     
 
 
@@ -133,6 +160,13 @@ def get_destinations(request):
     return Response(serializer.data)
 
 
+@api_view(['POST'])
+def get_nearby_destinations(request):
+    dest = request.data['dest_name']
+    nearby_dict = getNearby(dest)
+    return Response(nearby_dict)
+
+
 def logout_request(request):
     logout(request)
     messages.info(request, "Logged out successfully!")
@@ -141,3 +175,9 @@ def logout_request(request):
 def login_page(request):
     context = {}
     return render(request, 'accounts/login.html', context)
+
+
+'''
+{"dest_name": "Paris"}
+
+'''

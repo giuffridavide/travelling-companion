@@ -128,7 +128,7 @@ margin-bottom: 30px;
 }
 
 .destination {
-width: calc(33.33% - 20px);
+/* width: calc(33.33% - 20px); */
 margin-bottom: 30px;
 text-align: center;
 box-shadow: 0 2px 5px rgba(0,0,0,0.1);

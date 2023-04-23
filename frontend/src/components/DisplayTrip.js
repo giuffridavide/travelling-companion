@@ -1,11 +1,42 @@
 import React, {useState} from 'react'
 import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from "react-router-dom";
-import TripDetailsPage from "../pages/TripDetailsPage";
 
+
+function compareDates(d1, d2){
+  let today = new Date(d1).getTime();
+  let trip_date = new Date(d2).getTime();
+
+  let res = null;
+
+  if (trip_date <= today) {
+    res = true;
+  }
+  else{
+    res = false;
+  }
+
+  return res;
+}
 
 const DisplayTrip = ({trip}) => {
 
-  const imagePath = `images/trips/${trip.destination.name}.jpg`;
+  const imagePath = `images/trips/${trip.destination.img_name}.jpg`;
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    if (compareDates(currentDate, trip.end_date)) {
+      navigate('/pastTripDetails', {state: trip});
+    }
+    else{
+      navigate('/upcomingTripDetails', {state: trip});
+    }
+  };
+
+  const date = new Date();
+  let day = date.getDate();
+  let month = date.getMonth() + 1;
+  let year = date.getFullYear();
+  let currentDate = `${year}-${month}-${day}`;
   
   return (
     <div>
@@ -14,9 +45,7 @@ const DisplayTrip = ({trip}) => {
           <h2>{trip.destination.name}</h2>
           <h3>{trip.start_date}</h3>
           <p>{trip.destination.punchline}</p>
-          <Link to={{pathname:'/tripDetails', state: trip}}>
-            <button>View Details</button>
-          </Link>
+          <button onClick={handleClick}>View Details</button>
         </div>
     </div>
   )
