@@ -7,9 +7,9 @@ RUN apk update \
     && apk add postgresql-dev gcc python3-dev musl-dev
 RUN pip install --upgrade pip pipenv
 
-WORKDIR /api
-COPY ./Pipfile* ./
-RUN pipenv sync
+WORKDIR /backend
+COPY requirements.txt requirements.txt
+RUN pip3 install -r requirements.txt
 
 COPY . .
 
