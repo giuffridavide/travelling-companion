@@ -2,7 +2,7 @@ import pandas as pd
 import json
 
 df_json = []
-for table_name in ["user", "trip"]:
+for table_name in ["user", "trip", "city", "destination"]:
     df = pd.read_csv(f"trip/fixtures/{table_name}.csv")
     for idx, row in df.iterrows():
         tmp_dict = row.to_dict()

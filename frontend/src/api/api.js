@@ -33,6 +33,23 @@ export async function createTrip(data) {
 }
 
 
+export async function updateTrip(data) {
+    try {
+            await fetch(`/api/updateTrip/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            body: JSON.stringify(data)
+        })
+        return true
+    } catch (error) {
+        console.log('>>>updateTrip<<<' + error)
+        return false
+    }
+}
+
+
 export async function getAllDestinations(authTokens) {
 
     try {
@@ -57,6 +74,22 @@ export async function getAllUsers() {
     }
 }
 
+
+export async function getNearbyCities(dest) {
+    try {
+        let response =  await fetch('/api/nearbyDestinations/',
+                            {
+                                method: 'POST',
+                                headers: {'Content-Type': 'application/json'},
+                                body: JSON.stringify({'dest_name': dest})
+                            })
+        return await response.json()
+        
+    } catch (error) {
+        console.log('>>>NEARBY<<<' + error)
+        return []
+    }
+}
 
 // export async function loginUser(e) {
 //     try {
