@@ -24,10 +24,6 @@ class MyTokenObtainPairView(TokenObtainPairView):
     repr(serializer_class)
 
 
-def homepage(request):
-    return HttpResponse("<h1>Wow this is cool!</h1>")
-
-
 @api_view(['GET'])
 def get_routes(request):
     routes = [
